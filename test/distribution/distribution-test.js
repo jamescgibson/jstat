@@ -128,6 +128,7 @@ suite.addBatch({
       assert.epsilon(tol, jStat.studentt.inv(0.2, 10), -0.8790578);
     }
   },
+});
 
 suite.addBatch({
   'negbin pdf': {
@@ -187,7 +188,8 @@ suite.addBatch({
         assert.epsilon(tol, calculated, answers[i]);
       }
     }
-  },
+  }
+});
 
 suite.addBatch({
   'hypergeometric pdf': {
@@ -259,7 +261,6 @@ suite.addBatch({
         var sum = 0;
         for (var i = 0; i <= x; i++)
           sum += easyPDF(i, N, m, n);
-        }
         return sum;
       }
 
