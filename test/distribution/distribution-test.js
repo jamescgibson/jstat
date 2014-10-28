@@ -84,6 +84,23 @@ suite.addBatch({
     }
   },
 
+  'central F distribution': {
+    'topic': function() {
+      return jStat;
+    },
+    'check pdf calculation': function(jStat) {
+      var tol = 0.0000001;
+
+      var first = jStat.centralF.pdf(1, 100, 100);
+      assert.isNumber(first);
+      assert.epsilon(tol, first, 1.989731);
+
+      var second = jStat.centralF.pdf(1, 100, 100);
+      assert.isNumber(second);
+      assert.epsilon(tol, second, 1.989731);
+    }
+  },
+
   'studentt pdf': {
     'topic': function() {
       return jStat;
