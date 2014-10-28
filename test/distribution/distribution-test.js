@@ -128,7 +128,9 @@ suite.addBatch({
       assert.epsilon(tol, jStat.studentt.inv(0.2, 10), -0.8790578);
     }
   },
+});
 
+suite.addBatch({
   'negbin pdf': {
     'topic': function() {
       return jStat;
@@ -152,7 +154,9 @@ suite.addBatch({
       assert(jStat.negbin.cdf(k, r, p), 0.3135140584781766);
     }
   },
+});
 
+suite.addBatch({
   'hypergeometric pdf': {
     'topic': function() {
       return jStat;
@@ -184,8 +188,10 @@ suite.addBatch({
         assert.epsilon(tol, calculated, answers[i]);
       }
     }
-  },
+  }
+});
 
+suite.addBatch({
   'hypergeometric pdf': {
     'topic': function() {
       return jStat;
@@ -212,6 +218,7 @@ suite.addBatch({
             // For all possible sample sizes
             for (var x = 0; x < n; x++) {
               // For all subset sizes of the sampled set
+
               // Get the probability be each method
               var probEasy = easyPDF(x, N, m, n);
 
@@ -231,6 +238,7 @@ suite.addBatch({
           }
         }
       }
+
     },
 
     'check cdf agreement': function(jStat) {
@@ -265,12 +273,14 @@ suite.addBatch({
             // For all possible sample sizes
             for (var x = 0; x < n; x++) {
               // For all subset sizes of the sampled set
+
               // Get the probability be each method
               var probEasy = easyCDF(x, N, m, n);
 
               if (!isNaN(probEasy)) {
                 // The easy CDF worked for this situation. Compare it to the
                 // real one.
+
                 var probReal = jStat.hypgeom.cdf(x, N, m, n);
                 assert(!isNaN(probReal), 'Hypergeometric CDF returned NaN');
                 assert.epsilon(tol,
@@ -301,6 +311,7 @@ suite.addBatch({
 
       for (var i = 0; i < answers.length; i++) {
         // See if we get the right answer for each calculation.
+
         var calculated = jStat.hypgeom.pdf(successes[i], population[i],
                                            available[i], draws[i]);
 
@@ -329,6 +340,7 @@ suite.addBatch({
 
       for (var i = 0; i < answers.length; i++) {
         // See if we get the right answer for each calculation.
+
         var calculated = jStat.hypgeom.cdf(successes[i], population[i],
                                            available[i], draws[i]);
 
