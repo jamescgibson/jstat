@@ -1429,13 +1429,24 @@ jStat.extend(jStat.beta, {
 
 // extend F function with static methods
 jStat.extend(jStat.centralF, {
+  //This implementation of the pdf function avoids float overflow
+  //See the way that R calculates this value:
+  //https://svn.r-project.org/R/trunk/src/nmath/df.c
   pdf: function pdf(x, df1, df2) {
-    if (x < 0)
+   if (x < 0) {
       return undefined;
-    return Math.sqrt((Math.pow(df1 * x, df1) * Math.pow(df2, df2)) /
+    }
+
+    if(df1 > 2) {
+      var p = (df1 * x) / (df2 + x * df1);
+      var q = df2 / (df2 + x * df1);
+      var f = df1 * q / 2.0;
+      return f * jStat.binomial.pdf( (df1 - 2) / 2, (df1 + df2 - 2) / 2, p);
+    } else {
+      return Math.sqrt((Math.pow(df1 * x, df1) * Math.pow(df2, df2)) /
                      (Math.pow(df1 * x + df2, df1 + df2))) /
                      (x * jStat.betafn(df1/2, df2/2));
-
+    }
   },
 
   cdf: function cdf(x, df1, df2) {
@@ -1890,6 +1901,10 @@ jStat.extend(jStat.uniform, {
     else if (x < b)
       return (x - a) / (b - a);
     return 1;
+  },
+
+  inv: function(p, a, b) {
+    return a + (p * (b - a));
   },
 
   mean: function mean(a, b) {
@@ -2436,7 +2451,7 @@ jStat.extend({
     maug, pivot, temp, k;
     a = jStat.aug(a, b);
     maug = a[0].length;
-    for(; i < n; i++) {
+    for(i = 0; i < n; i++) {
       pivot = a[i][i];
       j = i;
       for (k = i + 1; k < m; k++) {
@@ -2462,7 +2477,7 @@ jStat.extend({
     for (i = n - 1; i >= 0; i--) {
       sum = 0;
       for (j = i + 1; j<= n - 1; j++) {
-        sum = x[j] * a[i][j];
+        sum = sum + x[j] * a[i][j];
       }
       x[i] =(a[i][maug - 1] - sum) / a[i][i];
     }
