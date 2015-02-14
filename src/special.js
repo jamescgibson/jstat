@@ -2,6 +2,8 @@
 (function(jStat, Math) {
 
 // Log-gamma function
+// Adapted from "Numerical Recipes in C", 2nd Edition,
+// by Press, Teukolsky, Vetterling, and Flannery, Chp 6 Section 1
 jStat.gammaln = function gammaln(x) {
   var j = 0;
   var cof = [
@@ -19,52 +21,9 @@ jStat.gammaln = function gammaln(x) {
 
 
 // gamma of x
+// Per "Numerical Recipes in C", calculate the gammafn via gammaln
 jStat.gammafn = function gammafn(x) {
-  var p = [-1.716185138865495, 24.76565080557592, -379.80425647094563,
-           629.3311553128184, 866.9662027904133, -31451.272968848367,
-           -36144.413418691176, 66456.14382024054
-  ];
-  var q = [-30.8402300119739, 315.35062697960416, -1015.1563674902192,
-           -3107.771671572311, 22538.118420980151, 4755.8462775278811,
-           -134659.9598649693, -115132.2596755535];
-  var fact = false;
-  var n = 0;
-  var xden = 0;
-  var xnum = 0;
-  var y = x;
-  var i, z, yi, res, sum, ysq;
-  if (y <= 0) {
-    res = y % 1 + 3.6e-16;
-    if (res) {
-      fact = (!(y & 1) ? 1 : -1) * Math.PI / Math.sin(Math.PI * res);
-      y = 1 - y;
-    } else {
-      return Infinity;
-    }
-  }
-  yi = y;
-  if (y < 1) {
-    z = y++;
-  } else {
-    z = (y -= n = (y | 0) - 1) - 1;
-  }
-  for (i = 0; i < 8; ++i) {
-    xnum = (xnum + p[i]) * z;
-    xden = xden * z + q[i];
-  }
-  res = xnum / xden + 1;
-  if (yi < y) {
-    res /= yi;
-  } else if (yi > y) {
-    for (i = 0; i < n; ++i) {
-      res *= y;
-      y++;
-    }
-  }
-  if (fact) {
-    res = fact / res;
-  }
-  return res;
+  return Math.exp(jStat.gammaln(x));
 };
 
 
