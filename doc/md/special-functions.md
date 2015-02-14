@@ -32,11 +32,13 @@ Returns the Log-Gamma function evaluated at x.
 
 ### gammap( a, x )
 
-Returns the lower incomplete gamma function evaluated at (a,x).
+Returns the lower incomplete gamma function evaluated at(a,x).
 This function is usually written with a lower case greek gamma character, and is one of the two [incomplete gamma functions](http://mathworld.wolfram.com/IncompleteGammaFunction.html).
 
 This function is tested against Mathematica's Gamma[a, 0, x].
-It is additionally tested against gammainc(a,x)'s 'lowinc' output from teh 'pracma' library for R.
+It is additionally tested against gammainc(a,x)'s 'lowinc' output from the 'pracma' library for R.
+
+Users familiar with Press, Teukolsky, Vetterling, and Flannery's "Numerical Methods in C" should note that the function called "gammap" in that text is the equivalent of jStat's `lowRegGamma`.
 
 ### lowRegGamma(a, x)
 
@@ -45,6 +47,8 @@ It is defined as the quotient of the lower incomplete gamma function evaluated a
 This function is usually written as P(x, a); and is one of the two [regularized gamma functions](http://mathworld.wolfram.com/RegularizedGammaFunction.html).
 
 This function is tested against gammainc(x, a)'s 'reginc' output from the 'pracma' library for R. Note that R and jStat switch the order of operators for this function.
+
+Users familiar with Press, Teukolsky, Vetterling, and Flannery's "Numerical Methods in C" should note that the function called "gammap" in that text is the equivalent to this function.
 
 ### gammapinv( p, a )
 

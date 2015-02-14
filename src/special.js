@@ -84,6 +84,7 @@ jStat.gammap = function gammap(a, x) {
 
 
 // The lower regularized incomplete gamma function, usually written P(a,x)
+// This function is called gammap in "Numerical Methods in C"
 jStat.lowRegGamma = function lowRegGamma(a, x) {
   var aln = jStat.gammaln(a);
   var ap = a;
