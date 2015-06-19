@@ -471,3 +471,30 @@ var jProto = jStat.prototype;
 })('quantiles percentileOfScore'.split(' '));
 
 }(this.jStat, Math));
+
+this.jStat.extend({
+  crosstab : function crosstab(arr) {
+    //Not a two dimensional array, so  return undefined
+    if(isArray(arr[0])) {
+
+      var totals = {};
+
+      for(i = 0; i < arr.length; i++) {
+        row = arr[i];
+        if(totals[row[0]] === undefined) {
+          totals[row[0]] = {};
+          if(totals[row[0]][row[1]] === undefined) {
+            totals[row[0]][row[1]] = 0;
+          }
+        }
+
+        totals[row[0]][row[1]] = totals[row[0]][row[1]] + row[2];
+      }
+
+      return totals;
+    }
+  }
+});
+
+
+
